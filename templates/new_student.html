@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block nav_items %}
+    <a href="/rector/" class="navbar-item">Главная</a>
+{% endblock %}
+{% block body %}
+
+    <div class="columns is-centered">
+        <div class="column is-half box">
+            <h2 class="title is-5">Новый студент</h2>
+            <form action="/students/" method="POST">
+                {% csrf_token %}
+                <div class="field">
+                    <label class="label">Имя</label>
+                    <div class="control">
+                        <input class="input" name="first_name" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Фамилия</label>
+                    <div class="control">
+                        <input class="input" name="last_name" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Отчество</label>
+                    <div class="control">
+                        <input class="input" name="middle_name" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Почта</label>
+                    <div class="control">
+                        <input class="input" name="email" type="email">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Логин</label>
+                    <div class="control">
+                        <input class="input" name="username" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Пароль</label>
+                    <div class="control">
+                        <input class="input" name="password" type="password">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="button is-primary" name="submit" type="submit" value="Создать">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

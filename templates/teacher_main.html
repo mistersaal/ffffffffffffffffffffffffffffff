@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Преподаватель</h2>
+            <p>{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</p>
+        </div>
+    </div>
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Экзамены</h2>
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                    <th>Предмет</th>
+                    <th>Группа</th>
+                </thead>
+                <tbody>
+                    {% for exam in exams %}
+                        <tr>
+                            <td>{{ exam.subject.name }}</td>
+                            <td><a href="/exams/{{ exam.id }}">{{ exam.group.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <a href="/exams/" class="button">Создать</a>
+        </div>
+    </div>
+
+{% endblock %}

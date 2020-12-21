@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <div class="columns is-centered">
+        <div class="column is-half box">
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                <th>Экзамен</th>
+                <th>Отметка</th>
+                </thead>
+                <tbody>
+                {% for exam in exams %}
+                    <tr>
+                        <td><a href="/subjectexam/{{ exam.id }}">{{ exam.subject.name }}</a></td>
+                        <td>{{ exam.mark }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

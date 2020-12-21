@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Преподаватели</h2>
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                    <th>ФИО</th>
+                </thead>
+                <tbody>
+                    {% for teacher in teachers %}
+                        <tr>
+                            <td>{{ teacher.last_name }} {{ teacher.first_name }} {{ teacher.middle_name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/teachers/" class="button">Создать</a>
+        </div>
+    </div>
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Предметы</h2>
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                    <th>Название</th>
+                </thead>
+                <tbody>
+                    {% for subject in subjects %}
+                        <tr>
+                            <td>{{ subject.name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/subjects/" class="button">Создать</a>
+        </div>
+    </div>
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Группы</h2>
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                    <th>Название</th>
+                </thead>
+                <tbody>
+                    {% for group in groups %}
+                        <tr>
+                            <td><a href="/groups/{{ group.id }}/">
+                                {{ group.name }}
+                            </a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/groups/" class="button">Создать</a>
+        </div>
+    </div>
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Студенты</h2>
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                    <th>ФИО</th>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.last_name }} {{ student.first_name }} {{ student.middle_name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/students/" class="button">Создать</a>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% block nav_items %}
+    <a href="/teacher/" class="navbar-item">Экзамены</a>
+{% endblock %}
+{% block body %}
+
+    <div class="columns is-centered">
+        <div class="column is-half box">
+            <form action="/exams/{{ exam.id }}/edit/" method="POST">
+                <div class="field">
+                    {% csrf_token %}
+                    <label class="label">Экзамен</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select name="relation">
+                                {% for relation in relations %}
+                                    <option value="{{ relation.group.id }}_{{ relation.subject.id }}"
+                                            {% if relation.group_id == exam.group_id and relation.subject_id == exam.subject_id %}
+                                                selected
+                                            {% endif %}
+                                    >
+                                        {{ relation.group.name }} {{ relation.subject.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Дата и время</label>
+                    <div class="control">
+                        <input class="input" name="datetime" type="text" placeholder="YYYY-MM-DD HH:MM:SS"
+                        value="{{ exam.datetime|date:'Y-m-d H:i:s' }}">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Аудитория</label>
+                    <div class="control">
+                        <input class="input" name="classroom" type="text" value="{{ exam.classroom }}">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="button is-primary" type="submit" value="Сохранить">
+                    </div>
+                </div>
+            </form>
+            <form action="/exams/{{ exam.id }}/delete/" method="POST">
+                {% csrf_token %}
+                <div class="field" style="margin-top: 10px;">
+                    <div class="control">
+                        <input class="button is-danger" type="submit" value="Удалить">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+{% block nav_items %}
+    <a href="/rector/" class="navbar-item">Главная</a>
+{% endblock %}
+{% block body %}
+
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Группа</h2>
+            <p>{{ group.name }}</p>
+            <p>{{ group.course }} курс</p><br>
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                <th>Студент</th>
+                <th></th>
+                </thead>
+                <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.last_name }} {{ student.first_name }} {{ student.middle_name }}</td>
+                        <td>
+                            <form method="POST" action="/groups/{{ group.id }}/student/delete/">
+                                {% csrf_token %}
+                                <input type="hidden" name="student" value="{{ student.id }}">
+                                <div class="field">
+                                    <div class="control">
+                                        <input type="submit" value="Удалить" class="button is-small is-danger">
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                <th>Предмет</th>
+                <th>Преподаватель</th>
+                <th></th>
+                </thead>
+                <tbody>
+                {% for relation in relations %}
+                    <tr>
+                        <td>{{ relation.subject.name }}</td>
+                        <td>{{ relation.teacher.last_name }} {{ relation.teacher.first_name }} {{ relation.teacher.middle_name }}</td>
+                        <td>
+                            <form method="POST" action="/groups/{{ group.id }}/subject/delete/">
+                                {% csrf_token %}
+                                <input type="hidden" name="subject" value="{{ relation.subject.id }}">
+                                <input type="hidden" name="teacher" value="{{ relation.teacher.id }}">
+                                <div class="field">
+                                    <div class="control">
+                                        <input type="submit" value="Удалить" class="button is-small is-danger">
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Добавить студента</h2>
+            <form action="/groups/{{ group.id }}/student/" method="POST">
+                {% csrf_token %}
+                <div class="field">
+                    <label class="label">Студент</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select name="student">
+                                {% for student in free_students %}
+                                    <option value="{{ student.id }}">
+                                        {{ student.last_name }} {{ student.first_name }} {{ student.middle_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input type="submit" class="button is-primary" value="Добавить">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="columns is-centered" style="margin-bottom: 25px;">
+        <div class="column is-half box">
+            <h2 class="title is-5">Добавить предмет</h2>
+            <form action="/groups/{{ group.id }}/subject/" method="POST">
+                {% csrf_token %}
+                <div class="field">
+                    <label class="label">Предмет</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select name="subject">
+                                {% for subject in subjects %}
+                                    <option value="{{ subject.id }}">
+                                        {{ subject.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Преподаватель</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select name="teacher">
+                                {% for teacher in teachers %}
+                                    <option value="{{ teacher.id }}">
+                                        {{ teacher.last_name }} {{ teacher.first_name }} {{ teacher.middle_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input type="submit" class="button is-primary" value="Добавить">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

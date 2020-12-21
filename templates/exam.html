@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block nav_items %}
+    <a href="/teacher/" class="navbar-item">Экзамены</a>
+{% endblock %}
+{% block body %}
+
+    <div class="columns is-centered">
+        <div class="column is-half box">
+            <h2 class="title is-5">Экзамен</h2>
+            <p>{{ subject.name }}</p>
+            <p>{{ exam.datetime|date:'d-m-Y H:i' }}</p>
+            <p>{{ group.name }}</p>
+            <a href="/exams/{{ exam.id }}/edit/" class="button">Изменить</a><br>
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                    <th>Студент</th>
+                    <th>Отметка</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.last_name }} {{ student.first_name }} {{ student.middle_name }}</td>
+                            <td>
+                                {% if student.mark_id != 0 %}
+                                <form method="POST" action="/marks/{{ student.mark_id }}/">
+                                {% else %}
+                                <form method="POST" action="/marks/">
+                                {% endif %}
+                                    {% csrf_token %}
+                                    <input type="hidden" name="student" value="{{ student.id }}">
+                                    <input type="hidden" name="exam" value="{{ exam.id }}">
+                                    <div class="field has-addons">
+                                        <div class="control">
+                                            <input type="number" name="mark" value="{{ student.mark }}" class="input is-small">
+                                        </div>
+                                        <div class="control">
+                                            <input type="submit" value="Сохранить" class="button is-small">
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

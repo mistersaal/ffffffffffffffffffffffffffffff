@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+    <div class="columns is-centered">
+        <div class="column is-half">
+            {% if form.errors %}
+                <p>Логин или пароль неверный.</p>
+            {% endif %}
+
+            {% if next %}
+                {% if user.is_authenticated %}
+                    <p>У вас нет доступа, пожалуйста, зайдите в тот аккаунт, который имеет доступ.</p>
+                {% else %}
+                    <p>Пожалуйста, войдите, чтобы увидеть эту страницу.</p>
+                {% endif %}
+            {% endif %}
+            <form method="post" action="{% url 'login' %}" class="box">
+                {% csrf_token %}
+                <div class="field">
+                    <label class="label">Логин</label>
+                    <div class="control">
+                        <input type="text" name="username" maxlength="150" required="" class="input">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Пароль</label>
+                    <div class="control">
+                        <input type="password" name="password" maxlength="150" required="" class="input">
+                    </div>
+                </div>
+
+                <input type="submit" value="Войти" class="button is-primary"/>
+                <input type="hidden" name="next" value="{{ next }}"/>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
